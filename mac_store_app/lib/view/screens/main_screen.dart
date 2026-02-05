@@ -1,18 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:mac_store_app/view/screens/nav_screens/account_screen.dart';
+import 'package:mac_store_app/view/screens/nav_screens/cart_screen.dart';
+import 'package:mac_store_app/view/screens/nav_screens/favourite_screen.dart';
+import 'package:mac_store_app/view/screens/nav_screens/home_screen.dart';
+import 'package:mac_store_app/view/screens/nav_screens/stores_screen.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
-
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
+  int _pageIndex = 0;
+  final List<Widget> _pages = [
+    HomeScreen(),
+    FavouriteScreen(),
+    StoresScreen(),
+    CartScreen(),
+    AccountScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Main Screen")),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.purple,
+        unselectedItemColor: Colors.grey,
+        currentIndex: _pageIndex,
+        onTap: (value) {
+          setState(() {
+            _pageIndex = value;
+          });
+        },
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
@@ -37,6 +56,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
+      body: _pages[_pageIndex],
     );
   }
 }

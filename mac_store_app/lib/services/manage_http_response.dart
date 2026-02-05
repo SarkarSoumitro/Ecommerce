@@ -31,7 +31,45 @@ void manageHttpResponse({
   }
 }
 
+// void showSnackBar(BuildContext context, String title) {
+//   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(title)));
+//   print(title);
+// }
 void showSnackBar(BuildContext context, String title) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(title)));
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      margin: const EdgeInsets.all(16),
+      content: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.info_outline, color: Colors.red),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(color: Colors.black, fontSize: 14),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+
   print(title);
 }
