@@ -20,6 +20,9 @@ const DB =
 
 //middleware to parse incoming request bodies in JSON format
 app.use(express.json());
+//middleware to enable CORS for Flutter Web (browser blocks cross-origin requests without this)
+app.use(require("cors")());
+
 //middleware for authentication routes
 app.use(authRouter);
 //connect to the database
