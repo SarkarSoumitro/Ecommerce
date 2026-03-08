@@ -3,6 +3,7 @@ import 'dart:html' as html;
 import 'dart:typed_data';
 
 import 'package:app_web/controller/banner_controller.dart';
+import 'package:app_web/views/side_bar_screens/widget/banner_widget.dart';
 import 'package:flutter/material.dart';
 
 class UploadBannerScreen extends StatefulWidget {
@@ -17,6 +18,8 @@ class UploadBannerScreen extends StatefulWidget {
 class _UploadBannerScreenState extends State<UploadBannerScreen> {
   final BannerController _bannerController = BannerController();
   Uint8List? _image;
+  final GlobalKey<BannerWidgetState> _bannerKey =
+      GlobalKey<BannerWidgetState>();
 
   pickImage() {
     final html.FileUploadInputElement uploadInput =
@@ -100,6 +103,20 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
             child: Text("Pick image"),
           ),
         ),
+        Divider(color: Colors.grey, thickness: 2),
+        Row(
+          children: [
+            Text("Refresh"),
+            IconButton(
+              onPressed: () {
+                _bannerKey.currentState?.refresh();
+              },
+              icon: Icon(Icons.refresh),
+            ),
+          ],
+        ),
+
+        BannerWidget(key: _bannerKey),
       ],
     );
   }

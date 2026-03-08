@@ -2,6 +2,7 @@
 import 'dart:html' as html;
 import 'dart:typed_data';
 import 'package:app_web/controller/category_controller.dart';
+import 'package:app_web/views/side_bar_screens/widget/category_widget.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -17,10 +18,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late String categoryName;
   final CategoryController _categoryController = CategoryController();
-Uint8List? _bannerImage;
+  Uint8List? _bannerImage;
   Uint8List? _image;
-  
- 
+  final GlobalKey<CategoryWidgetState> _categoryKey = GlobalKey<CategoryWidgetState>();
+
   pickImage() {
     final html.FileUploadInputElement uploadInput =
         html.FileUploadInputElement();
@@ -226,6 +227,18 @@ Uint8List? _bannerImage;
             child: Text("Pick banner"),
           ),
           Divider(color: Colors.black),
+          Row(
+            children: [
+              Text("Refresh"),
+              IconButton(
+                onPressed: () {
+                  _categoryKey.currentState?.refresh();
+                },
+                icon: Icon(Icons.refresh),
+              ),
+            ],
+          ),
+          CategoryWidget(key: _categoryKey),
         ],
       ),
     );

@@ -36,7 +36,7 @@ class Category {
     );
   }
 
-  // Deserialization: Decode json string into a Category object
-  factory Category.fromJson(String source) =>
-      Category.fromMap(json.decode(source) as Map<String, dynamic>);
+  // Deserialization: Convert a json Map into a Category object
+  factory Category.fromJson(Map<String, dynamic> source) =>
+      Category.fromMap(source);
 }

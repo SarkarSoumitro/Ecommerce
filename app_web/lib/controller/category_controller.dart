@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:app_web/global_varieable.dart';
 import 'package:app_web/models/category.dart';
 import 'package:app_web/services/manage_http_response.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class CategoryController {
@@ -10,7 +12,7 @@ class CategoryController {
     required Uint8List pickedImage,
     required Uint8List pickedBanner,
     required String Name,
-    required context,
+    required BuildContext context,
   }) async {
     try {
       final cloudinary = CloudinaryPublic('dhwq9bhzl', 'sl0ojigx');
@@ -52,6 +54,10 @@ class CategoryController {
           "Content-Type": "application/json; charset=UTF-8",
         },
       );
+
+      // ✅ Check if the widget is still alive before using context
+      if (!context.mounted) return;
+
       manageHttpResponse(
         response: response,
         context: context,
@@ -61,6 +67,31 @@ class CategoryController {
       );
     } catch (e) {
       print("Error uploading image: $e");
+    }
+  }
+
+  //load the updloaded category
+
+  Future<List<Category>> loadCategories() async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse("$uri/api/category"),
+        headers: <String, String>{
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      );
+      print(response.body);
+      if (response.statusCode == 200) {
+        List<dynamic> data = jsonDecode(response.body);
+        List<Category> categories = data
+            .map((category) => Category.fromJson(category))
+            .toList();
+        return categories;
+      } else {
+        throw Exception("Failed to load categories");
+      }
+    } catch (e) {
+      throw Exception("Error loading categories $e");
     }
   }
 }

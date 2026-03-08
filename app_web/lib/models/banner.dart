@@ -22,7 +22,7 @@ class BannerModel {
     );
   }
 
-  // Deserialization: Decode json string into a BannerModel object
-  factory BannerModel.fromJson(String source) =>
-      BannerModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  // Deserialization: Convert a json Map into a BannerModel object
+  factory BannerModel.fromJson(Map<String, dynamic> source) =>
+      BannerModel.fromMap(source);
 }
